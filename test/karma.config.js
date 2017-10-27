@@ -21,10 +21,10 @@ export default function (config) {
     },
     client: {
       mocha: {
-        timeout: 60000
+        timeout: 10000
       }
     },
-    browserNoActivityTimeout: 60000,
+    browserNoActivityTimeout: 10000,
     customLaunchers: {
       ChromeTravis: {
         base: 'Chrome',

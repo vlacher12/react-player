@@ -76,6 +76,14 @@ const TEST_URLS = [
 
 describe('ReactPlayer', () => {
   let div
+  let timeout
+
+  // For retries to work, the test must error, as opposed
+  // to timing out from lack of browser activity
+  function setManualTimeout (done) {
+    const MANUAL_TIMEOUT = 30000 // Should be smaller than the timeouts set in karma.config.js
+    timeout = setTimeout(() => done('Test did not complete in time'), MANUAL_TIMEOUT)
+  }
 
   beforeEach(() => {
     div = document.createElement('div')
@@ -85,6 +93,7 @@ describe('ReactPlayer', () => {
   afterEach(() => {
     unmountComponentAtNode(div)
     document.body.removeChild(div)
+    clearTimeout(timeout)
   })
 
   for (let test of TEST_URLS) {
@@ -97,6 +106,8 @@ describe('ReactPlayer', () => {
       })
 
       it('onReady, onStart, onPlay, onDuration, onProgress', done => {
+        setManualTimeout(done)
+
         // Use a count object to ensure everything is called at least once
         let count = {}
         const bump = key => {
@@ -122,6 +133,7 @@ describe('ReactPlayer', () => {
       })
 
       it('onPause', done => {
+        setManualTimeout(done)
         const onPause = () => done()
         const pausePlayer = () => {
           render(
@@ -148,6 +160,7 @@ describe('ReactPlayer', () => {
 
       if (test.error) {
         it('onError', done => {
+          setManualTimeout(done)
           render(
             <ReactPlayer
               url={test.error}
@@ -160,6 +173,7 @@ describe('ReactPlayer', () => {
 
       if (test.seek) {
         it('seekTo, onSeek', done => {
+          setManualTimeout(done)
           let player
           render(
             <ReactPlayer
@@ -179,6 +193,7 @@ describe('ReactPlayer', () => {
 
       if (test.name === 'Vidme') {
         it('plays a specific format', done => {
+          setManualTimeout(done)
           render(
             <ReactPlayer
               url='https://vid.me/GGho'
@@ -189,6 +204,7 @@ describe('ReactPlayer', () => {
         })
 
         it('ignores an unknown format', done => {
+          setManualTimeout(done)
           render(
             <ReactPlayer
               url='https://vid.me/GGho'
@@ -203,6 +219,7 @@ describe('ReactPlayer', () => {
 
   describe('switching players', () => {
     it('switches players', done => {
+      setManualTimeout(done)
       const switchPlayer = () => {
         render(
           <ReactPlayer
