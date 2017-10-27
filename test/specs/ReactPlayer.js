@@ -89,7 +89,9 @@ describe('ReactPlayer', () => {
 
   for (let test of TEST_URLS) {
     const desc = test.skip ? describe.skip : describe
-    desc(test.name, () => {
+    desc(test.name, function () {
+      this.retries(5)
+
       it('canPlay', () => {
         expect(ReactPlayer.canPlay(test.url)).to.be.true
       })
