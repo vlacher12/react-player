@@ -33,6 +33,7 @@ export default class Twitch extends Component {
         channel: isChannel ? id : '',
         height: '100%',
         width: '100%',
+        controls: false,
         playsinline: playsinline,
         autoplay: this.props.playing
       })
