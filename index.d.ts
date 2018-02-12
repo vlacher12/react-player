@@ -62,6 +62,7 @@ export interface ReactPlayerProps {
   playing?: boolean;
   loop?: boolean;
   controls?: boolean;
+  quality?: string;
   volume?: number;
   muted?: boolean;
   playbackRate?: number;
@@ -96,5 +97,6 @@ export default class ReactPlayer extends React.Component<ReactPlayerProps, any> 
   seekTo(fraction: number): void;
   getCurrentTime(): number;
   getDuration(): number;
+  getQuality(): string;
   getInternalPlayer(key?: string): Object;
 }
